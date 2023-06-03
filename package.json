@@ -5,7 +5,7 @@
     "type": "git",
     "url": "https://github.com/components-kit/components-kit-react.git"
   },
-  "main": "lib/index.js",
+  "main": "lib/esm/index.js",
   "exports": {
     ".": {
       "require": "./lib/index.js",
@@ -81,5 +81,8 @@
   },
   "lint-staged": {
     "*.{ts, js}": "yarn lint"
+  },
+  "dependencies": {
+    "classnames": "^2.3.2"
   }
 }
