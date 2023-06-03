@@ -6,35 +6,31 @@ export interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   trailingIcon?: ReactNode;
   label?: string;
   link?: string;
-  buttonWidth?: 'full' | 'auto';
-  buttonStyle?: 'primary' | 'secondary' | 'tertiary';
-  buttonSize?: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  buttonWidth: 'full' | 'auto';
+  buttonStyle: 'primary' | 'secondary' | 'tertiary';
+  buttonSize: 'sm' | 'base' | 'lg';
 }
 
 export const Button = (props: IButtonProps) => {
-  const { leadingIcon, trailingIcon, label, onClick, link, disabled, buttonWidth, type, form } =
-    props;
+  const {
+    leadingIcon,
+    trailingIcon,
+    label,
+    onClick,
+    link,
+    disabled,
+    // buttonWidth,
+    type,
+    form,
+    // buttonStyle,
+  } = props;
 
   const renderButton = () => {
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {leadingIcon}
-        {label && (
-          <span
-            style={{
-              flexGrow: 1,
-            }}
-          >
-            {label}
-          </span>
-        )}
-        {trailingIcon}
+      <div>
+        <span>{leadingIcon}</span>
+        {label && <span>{label}</span>}
+        <span>{trailingIcon}</span>
       </div>
     );
   };
@@ -42,16 +38,14 @@ export const Button = (props: IButtonProps) => {
   return link ? (
     <a href={link}>{renderButton()}</a>
   ) : (
-    <button
-      onClick={onClick}
-      disabled={disabled}
-      type={type}
-      form={form}
-      style={{
-        width: buttonWidth,
-      }}
-    >
+    <button onClick={onClick} disabled={disabled} type={type} form={form}>
       {renderButton()}
     </button>
   );
+};
+
+Button.defaultProps = {
+  buttonStyle: 'primary',
+  buttonSize: 'md',
+  buttonWidth: 'auto',
 };
