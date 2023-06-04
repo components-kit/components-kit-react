@@ -1,6 +1,11 @@
 import React from 'react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
-import styled from 'styled-components';
+import styled, { StyledComponent, css } from 'styled-components';
+import useSWR from 'swr';
+import { IStyledComponent } from '../../interfaces/styled-component';
+import { IApiComponent } from '../../interfaces/api-component';
+import { fetcher } from '../../utils/fetcher';
+import { CONSTANT } from '../../constant';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leadingIcon?: ReactNode;
@@ -12,7 +17,7 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonSize: 'sm' | 'base' | 'lg';
 }
 
-const ButtonStyled = styled.div`
+const ButtonStyled: StyledComponent<'div', any, IStyledComponent, never> = styled.div`
   display: flex;
   align-items: center;
   background-color: #e5e7eb;
@@ -28,22 +33,33 @@ const ButtonStyled = styled.div`
     background-color: #9ca3af;
   }
 
-  :not(:first-child) {
-    margin-left: 0.5rem;
-  }
-
   > span {
     display: grid;
     place-items: center;
   }
+
+  > span:not(:first-child) {
+    margin-left: 0.5rem;
+  }
+
+  ${({ userStyles }: IStyledComponent) =>
+    (userStyles &&
+      css`
+        ${userStyles}
+      `) ||
+    ''};
 `;
 
 const Button = (props: IButtonProps) => {
   const { leadingIcon, trailingIcon, label, link, buttonWidth, form, disabled, onClick } = props;
+  const { data: buttonData } = useSWR<IApiComponent>(
+    `${CONSTANT.API_URL}/components/button`,
+    fetcher,
+  );
 
   const renderButton = () => {
     return (
-      <ButtonStyled>
+      <ButtonStyled userStyles={buttonData?.ui?.container}>
         <span>{leadingIcon}</span>
         <span>{label}</span>
         <span>{trailingIcon}</span>
