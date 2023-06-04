@@ -27,7 +27,7 @@
   },
   "scripts": {
     "test": "jest --config jestconfig.json",
-    "build": "yarn build:esm && yarn build:cjs",
+    "build": "yarn build:esm && yarn build:cjs && copyfiles -u 1 src/**/*.css lib",
     "build:esm": "tsc --module esnext && copyfiles -u 1 src/**/*.css lib/esm",
     "build:cjs": "tsc --module commonjs --outDir lib/cjs && copyfiles -u 1 src/**/*.css lib/cjs",
     "format": "prettier --write \"src/**/*.tsx\"",
