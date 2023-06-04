@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
+import styled from 'styled-components';
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   leadingIcon?: ReactNode;
@@ -11,122 +12,82 @@ interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   buttonSize: 'sm' | 'base' | 'lg';
 }
 
-export class Button extends Component<IButtonProps> {
-  static defaultProps: Partial<IButtonProps> = {
-    buttonStyle: 'primary',
-    buttonSize: 'base',
-    buttonWidth: 'auto',
-  };
+const ButtonStyled = styled.div`
+  display: flex;
+  align-items: center;
+  background-color: #e5e7eb;
+  border-radius: 0.25rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.875rem;
 
-  state = {
-    isHovered: false,
-    isActive: false,
-  };
+  &:hover {
+    background-color: #d1d5db;
+  }
 
-  handleMouseEnter = () => {
-    this.setState({ isHovered: true });
-  };
+  &:active {
+    background-color: #9ca3af;
+  }
 
-  handleMouseLeave = () => {
-    this.setState({ isHovered: false });
-  };
+  :not(:first-child) {
+    margin-left: 0.5rem;
+  }
 
-  handleMouseDown = () => {
-    this.setState({ isActive: true });
-  };
+  > span {
+    display: grid;
+    place-items: center;
+  }
+`;
 
-  handleMouseUp = () => {
-    this.setState({ isActive: false });
-  };
+const Button = (props: IButtonProps) => {
+  const { leadingIcon, trailingIcon, label, link, buttonWidth, form, disabled, onClick } = props;
 
-  renderButton = () => {
-    const { leadingIcon, trailingIcon, label } = this.props;
-
-    const { isHovered, isActive } = this.state;
-
+  const renderButton = () => {
     return (
-      <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          backgroundColor: isActive ? '#f3f4f6' : isHovered ? '#d1d5db' : '#e5e7eb',
-          borderRadius: '0.25rem',
-          padding: '0.25rem 0.5rem',
-          fontSize: '0.875rem',
-        }}
-      >
-        <span
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-          }}
-        >
-          {leadingIcon}
-        </span>
-        {label && (
-          <span
-            style={{
-              marginLeft: '0.5rem',
-            }}
-          >
-            {label}
-          </span>
-        )}
-        <span
-          style={{
-            display: 'grid',
-            placeItems: 'center',
-            marginLeft: '0.5rem',
-          }}
-        >
-          {trailingIcon}
-        </span>
-      </div>
+      <ButtonStyled>
+        <span>{leadingIcon}</span>
+        <span>{label}</span>
+        <span>{trailingIcon}</span>
+      </ButtonStyled>
     );
   };
 
-  render() {
-    const { onClick, link, disabled, buttonWidth, type, form } = this.props;
-
-    if (link) {
-      return (
-        <a
-          href={link}
-          style={{
-            display: 'inline-block',
-            width: buttonWidth === 'full' ? '100%' : buttonWidth,
-          }}
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
-          onMouseDown={this.handleMouseDown}
-          onMouseUp={this.handleMouseUp}
-        >
-          {this.renderButton()}
-        </a>
-      );
-    }
-
+  if (link) {
     return (
-      <button
-        onClick={onClick}
-        disabled={disabled}
-        type={type}
-        form={form}
+      <a
+        href={link}
         style={{
+          display: 'inline-block',
           width: buttonWidth === 'full' ? '100%' : buttonWidth,
-          backgroundColor: 'transparent',
-          border: 'none',
-          outline: 'none',
-          cursor: 'pointer',
-          padding: 0,
         }}
-        onMouseEnter={this.handleMouseEnter}
-        onMouseLeave={this.handleMouseLeave}
-        onMouseDown={this.handleMouseDown}
-        onMouseUp={this.handleMouseUp}
       >
-        {this.renderButton()}
-      </button>
+        {renderButton()}
+      </a>
     );
   }
-}
+
+  return (
+    <button
+      onClick={onClick}
+      disabled={disabled}
+      form={form}
+      style={{
+        width: buttonWidth === 'full' ? '100%' : buttonWidth,
+        backgroundColor: 'transparent',
+        border: 'none',
+        outline: 'none',
+        cursor: 'pointer',
+        padding: 0,
+      }}
+    >
+      {renderButton()}
+    </button>
+  );
+};
+
+Button.defaultProps = {
+  buttonWidth: 'auto',
+  buttonStyle: 'primary',
+  buttonSize: 'base',
+};
+
+export default Button;

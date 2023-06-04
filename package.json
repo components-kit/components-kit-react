@@ -5,12 +5,14 @@
     "type": "git",
     "url": "https://github.com/components-kit/components-kit-react.git"
   },
-  "main": "lib/esm/index.js",
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
   "exports": {
     ".": {
-      "require": "./lib/index.js",
+      "require": "./lib/cjs/index.js",
       "import": "./lib/esm/index.js"
-    }
+    },
+    "./lib/components-kit.css": "./lib/components-kit.css"
   },
   "author": "Components Kit",
   "license": "MIT",
@@ -26,10 +28,10 @@
     "url": "https://github.com/components-kit/components-kit-react/issues"
   },
   "scripts": {
-    "test": "jest --config jestconfig.json",
-    "build": "yarn build:esm && yarn build:cjs && copyfiles -u 1 src/**/*.css lib",
-    "build:esm": "tsc --module esnext && copyfiles -u 1 src/**/*.css lib/esm",
-    "build:cjs": "tsc --module commonjs --outDir lib/cjs && copyfiles -u 1 src/**/*.css lib/cjs",
+    "test": "jest",
+    "build": "yarn build:esm && yarn build:cjs",
+    "build:esm": "tsc --module esnext",
+    "build:cjs": "tsc --module commonjs --outDir lib/cjs",
     "format": "prettier --write \"src/**/*.tsx\"",
     "lint": "eslint \"src/**\"",
     "prepare": "yarn run build",
@@ -39,12 +41,16 @@
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
-    "classnames": "^2.3.2"
+    "classnames": "^2.3.2",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "styled-components": "5.3.11"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.3.0",
     "@commitlint/config-conventional": "^17.3.0",
-    "@types/react": "^18.2.8",
+    "@types/react": "18.2.8",
+    "@types/styled-components": "^5.1.26",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
     "copyfiles": "^2.4.1",
@@ -55,10 +61,6 @@
     "jest": "^29.5.0",
     "lint-staged": "^13.1.0",
     "prettier": "^2.3.2",
-    "react": "^16.0.0",
-    "react-dom": "^16.0.0",
-    "source-map-support": "^0.5.20",
-    "supertest": "^6.1.3",
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.0.0",
@@ -71,18 +73,17 @@
       "json",
       "ts"
     ],
-    "rootDir": "src",
     "testRegex": ".*\\.spec\\.ts$",
     "transform": {
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "collectCoverageFrom": [
-      "**/*.(t|j)s"
+      "src/**/*.(t|j)s"
     ],
-    "coverageDirectory": "../coverage",
-    "testEnvironment": "node"
+    "coverageDirectory": "coverage",
+    "testEnvironment": "jsdom"
   },
   "lint-staged": {
-    "*.{ts, js}": "yarn lint"
+    "*.{ts,js}": "yarn lint"
   }
 }
