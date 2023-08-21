@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "outDir": "lib/esm",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "declaration": true,
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "strictNullChecks": true,
+    "allowSyntheticDefaultImports": true,
+    "allowJs": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "lib"]
+}
