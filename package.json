@@ -20,7 +20,7 @@
   ],
   "author": "Components Kit",
   "license": "MIT",
-  "description": "A collection of React components for starting your project",
+  "description": "Release your MVP much faster.",
   "keywords": [
     "react",
     "components",
@@ -44,27 +44,22 @@
     "postversion": "git push && git push --tags"
   },
   "dependencies": {
-    "@headlessui/react": "^1.7.15",
-    "axios": "^1.4.0",
     "classnames": "^2.3.2",
+    "lilconfig": "^2.1.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "styled-components": "^6.0.2",
     "swr": "^2.1.5"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.3.0",
-    "@commitlint/config-conventional": "^17.3.0",
     "@types/react": "18.2.8",
     "@typescript-eslint/eslint-plugin": "^5.0.0",
     "@typescript-eslint/parser": "^5.0.0",
-    "copyfiles": "^2.4.1",
     "eslint": "^8.0.1",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "husky": "^8.0.2",
     "jest": "^29.5.0",
-    "lint-staged": "^13.1.0",
     "prettier": "^2.3.2",
     "ts-jest": "^27.0.3",
     "ts-loader": "^9.2.3",
@@ -86,9 +81,9 @@
       "src/**/*.(t|j)s"
     ],
     "coverageDirectory": "coverage",
-    "testEnvironment": "jsdom"
-  },
-  "lint-staged": {
-    "*.{ts,js}": "yarn lint"
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "^axios$": "axios/dist/node/axios.cjs"
+    }
   }
 }

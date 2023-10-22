@@ -1,10 +1,8 @@
+'use client';
+
 import React from 'react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled, { IStyledComponent, css } from 'styled-components';
-import useSWR from 'swr';
-import { IApiComponent } from '../../interfaces/api-component';
-import { fetcher } from '../../utils/fetcher';
-import { CONSTANT } from '../../constant';
 import { IStyledComponentProps } from '../../interfaces/styled-component';
 
 type ButtonAttr = 'form' | 'disabled' | 'onClick';
@@ -62,11 +60,9 @@ const Button = ({
   onClick,
   buttonWidth = 'auto',
 }: IButtonProps) => {
-  const { data } = useSWR<IApiComponent>(`${CONSTANT.API_URL}/components/button`, fetcher);
-
   const renderButton = () => {
     return (
-      <ButtonStyled userstyles={data?.ui?.container}>
+      <ButtonStyled userstyles={undefined}>
         {leadingIcon && <div>{leadingIcon}</div>}
         {label && <div>{label}</div>}
         {trailingIcon && <div>{trailingIcon}</div>}
