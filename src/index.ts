@@ -1,13 +1,4 @@
 import Button from './components/button';
+import { ComponentsKitProvider } from './context';
 
-import { lilconfigSync } from 'lilconfig';
-
-const configSync = lilconfigSync('package.json', {
-  searchPlaces: ['package.json'],
-});
-
-const config = configSync.search();
-
-console.log(config);
-
-export { Button };
+export { Button, ComponentsKitProvider };
