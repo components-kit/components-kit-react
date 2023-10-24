@@ -1,3 +1,6 @@
 export const CONSTANT = {
-  API_URL: 'http://localhost:8000/api',
+  domain: 'https://api-dev.componentskit.com',
+  api: {
+    components: '/components',
+  },
 };

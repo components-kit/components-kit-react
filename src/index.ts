@@ -1,4 +1,4 @@
 import Button from './components/button';
-import ComponentsKitContext, { IComponentsKitContext } from './context/ComponentsKitContext';
+import { ComponentsKitProvider } from './context';
 
-export { Button, ComponentsKitContext, IComponentsKitContext };
+export { Button, ComponentsKitProvider };
