@@ -1,5 +1,5 @@
 export const CONSTANT = {
-  domain: 'https://api.componentskit.com',
+  domain: 'https://api-dev.componentskit.com',
   api: {
     components: '/components',
   },
