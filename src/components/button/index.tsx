@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 import styled, { IStyledComponent, css } from 'styled-components';
 import useSWR from 'swr';
@@ -18,9 +18,9 @@ export interface IButtonProps extends CombinedType {
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
   label?: string;
-  buttonWidth?: 'full' | 'auto';
+  width?: 'full' | 'auto';
   appearance?: 'primary' | 'secondary';
-  buttonSize?: 'sm' | 'md' | 'lg';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const ButtonStyled: IStyledComponent<'web', any> = styled.button`
@@ -39,40 +39,20 @@ const Button = ({
   form,
   disabled,
   onClick,
-  buttonWidth = 'auto',
+  width = 'auto',
   appearance = 'primary',
-  buttonSize = 'md',
+  size = 'md',
 }: IButtonProps) => {
-  const [css, setCSS] = useState('');
   const { publicToken } = useComponenstKitContext();
   const { api } = CONSTANT;
-  const { data, isLoading, error } = useSWR(`${api.components}/button`, (url: string) =>
-    fetcher(url, publicToken),
+  const { data, isLoading } = useSWR(
+    publicToken ? `${api.componentButton}/css` : undefined,
+    (url: string) => fetcher(url, publicToken),
   );
 
-  const fallbackKey = 'button_fallback';
-
-  useEffect(() => {
-    const getCurrentFallback = localStorage.getItem(`${fallbackKey}`);
-    const getCurrentFallbackVersion = localStorage.getItem(`${fallbackKey}_version`);
-
-    if (isLoading || error) {
-      if (getCurrentFallback) {
-        setCSS(getCurrentFallback);
-      }
-
-      return;
-    }
-
-    if (!data) return;
-
-    if (getCurrentFallbackVersion !== data.fallbackVersion && data.fallback) {
-      localStorage.setItem(fallbackKey, data.fallback);
-      localStorage.setItem(`${fallbackKey}_version`, data.fallbackVersion);
-    }
-
-    setCSS(data.css);
-  }, [isLoading, error]);
+  if (isLoading) {
+    return null;
+  }
 
   return (
     <ButtonStyled
@@ -80,10 +60,10 @@ const Button = ({
       disabled={disabled}
       form={form}
       style={{
-        width: buttonWidth === 'full' ? '100%' : buttonWidth,
+        width: width === 'full' ? '100%' : width,
       }}
-      customstyles={css}
-      className={classNames(appearance, buttonSize)}
+      customstyles={data}
+      className={classNames(appearance, size)}
     >
       {leadingIcon && <div>{leadingIcon}</div>}
       {label && <div>{label}</div>}
