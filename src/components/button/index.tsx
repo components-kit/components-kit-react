@@ -15,12 +15,12 @@ type CombinedType = Pick<
 >;
 
 export interface IButtonProps extends CombinedType {
+  fullWidth?: boolean;
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
+  label?: string;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
-  label?: string;
-  width?: 'full' | 'auto';
-  appearance?: 'primary' | 'secondary';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
 }
 
 const ButtonStyled: IStyledComponent<'web', any> = styled.button`
@@ -32,16 +32,17 @@ const ButtonStyled: IStyledComponent<'web', any> = styled.button`
     ''};
 `;
 
-const Button = ({
-  leadingIcon,
-  trailingIcon,
-  label,
+export const Button = ({
+  fullWidth,
+  variant = 'primary',
+  size = 'md',
   form,
   disabled,
   onClick,
-  width = 'auto',
-  appearance = 'primary',
-  size = 'md',
+  type,
+  label,
+  leadingIcon,
+  trailingIcon,
 }: IButtonProps) => {
   const { publicToken } = useComponenstKitContext();
   const { api } = CONSTANT;
@@ -50,7 +51,7 @@ const Button = ({
     (url: string) => fetcher(url, publicToken),
   );
 
-  if (isLoading) {
+  if (isLoading || !data) {
     return null;
   }
 
@@ -59,17 +60,16 @@ const Button = ({
       onClick={onClick}
       disabled={disabled}
       form={form}
+      type={type}
       style={{
-        width: width === 'full' ? '100%' : width,
+        width: fullWidth ? '100%' : 'auto',
       }}
       customstyles={data}
-      className={classNames(appearance, size)}
+      className={classNames(variant, size)}
     >
-      {leadingIcon && <div>{leadingIcon}</div>}
-      {label && <div>{label}</div>}
-      {trailingIcon && <div>{trailingIcon}</div>}
+      {leadingIcon}
+      {label && <p>{label}</p>}
+      {trailingIcon}
     </ButtonStyled>
   );
 };
-
-export default Button;
