@@ -19,7 +19,7 @@
     "LICENSE"
   ],
   "author": "Components Kit",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "description": "Release your MVP much faster.",
   "keywords": [
     "react",
