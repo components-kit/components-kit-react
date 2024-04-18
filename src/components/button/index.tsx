@@ -63,6 +63,8 @@ export const Button = ({
       type={type}
       style={{
         width: fullWidth ? '100%' : 'auto',
+        display: 'flex',
+        justifyContent: fullWidth ? 'center' : 'initial',
       }}
       customstyles={data}
       className={classNames(variant, size)}
