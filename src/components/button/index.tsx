@@ -51,7 +51,7 @@ export const Button = ({
     (url: string) => fetcher(url, publicToken),
   );
 
-  if (isLoading || !data) {
+  if (isLoading) {
     return null;
   }
 
