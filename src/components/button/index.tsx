@@ -16,8 +16,8 @@ type CombinedType = Pick<
 
 export interface IButtonProps extends CombinedType {
   fullWidth?: boolean;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline' | 'link' | 'icon';
-  size?: 'sm' | 'md' | 'lg' | 'xl';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline' | 'link';
+  size?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
   label?: string;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
