@@ -17,10 +17,11 @@ type CombinedType = Pick<
 export interface IButtonProps extends CombinedType {
   fullWidth?: boolean;
   variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline' | 'link';
-  size?: 'sm' | 'md' | 'lg' | 'xl' | 'icon';
+  size?: 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
   leadingIcon?: ReactNode;
   trailingIcon?: ReactNode;
+  iconOnly?: boolean;
 }
 
 const ButtonStyled: IStyledComponent<'web', any> = styled.button`
@@ -43,6 +44,7 @@ export const Button = ({
   label,
   leadingIcon,
   trailingIcon,
+  iconOnly,
 }: IButtonProps) => {
   const { publicToken } = useComponenstKitContext();
   const { api } = CONSTANT;
@@ -62,7 +64,7 @@ export const Button = ({
       form={form}
       type={type}
       customstyles={data}
-      className={classNames(variant, size, fullWidth && 'full-width')}
+      className={classNames(variant, size, fullWidth && 'full-width', iconOnly && 'icon')}
     >
       {leadingIcon}
       {label && <p>{label}</p>}
