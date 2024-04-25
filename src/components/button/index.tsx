@@ -16,7 +16,7 @@ type CombinedType = Pick<
 
 export interface IButtonProps extends CombinedType {
   fullWidth?: boolean;
-  variant?: 'primary' | 'secondary';
+  variant?: 'primary' | 'secondary' | 'ghost' | 'destructive' | 'outline' | 'link' | 'icon';
   size?: 'sm' | 'md' | 'lg' | 'xl';
   label?: string;
   leadingIcon?: ReactNode;
@@ -61,13 +61,8 @@ export const Button = ({
       disabled={disabled}
       form={form}
       type={type}
-      style={{
-        width: fullWidth ? '100%' : 'auto',
-        display: 'flex',
-        justifyContent: fullWidth ? 'center' : 'initial',
-      }}
       customstyles={data}
-      className={classNames(variant, size)}
+      className={classNames(variant, size, fullWidth && 'full-width')}
     >
       {leadingIcon}
       {label && <p>{label}</p>}
